@@ -12,8 +12,8 @@
 //According to your need to modify the constants.
 #define TICKS_INTERVAL    5	//ms
 #define DEBOUNCE_TICKS    3	//MAX 8
-#define SHORT_TICKS       (300 /TICKS_INTERVAL)
-#define LONG_TICKS        (1000 /TICKS_INTERVAL)
+#define SHORT_TICKS       (200 /TICKS_INTERVAL)
+#define LONG_TICKS        (3000 /TICKS_INTERVAL)
 
 
 typedef void (*BtnCallback)(void*);
@@ -25,7 +25,8 @@ typedef enum {
 	SINGLE_CLICK,
 	DOUBLE_CLICK,
 	LONG_PRESS_START,
-	LONG_PRESS_HOLD,
+	LONG_PRESS_HOLD,            //5ms触发一次
+    LONG_PRESS_UP,              //此处修改了源码修改源码得来
 	number_of_event,
 	NONE_PRESS
 }PressEvent;
@@ -48,7 +49,7 @@ typedef struct Button {
 extern "C" {
 #endif
 
-void button_init(struct Button* handle, uint8_t(*pin_level)(), uint8_t active_level, uint8_t button_id);
+void button_init(struct Button* handle, uint8_t(*pin_level)(uint8_t), uint8_t active_level, uint8_t button_id);
 void button_attach(struct Button* handle, PressEvent event, BtnCallback cb);
 PressEvent get_button_event(struct Button* handle);
 int  button_start(struct Button* handle);

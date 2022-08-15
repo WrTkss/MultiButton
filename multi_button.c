@@ -18,7 +18,7 @@ static struct Button* head_handle = NULL;
   * @param  button_id: the button id.
   * @retval None
   */
-void button_init(struct Button* handle, uint8_t(*pin_level)(), uint8_t active_level, uint8_t button_id)
+void button_init(struct Button* handle, uint8_t(*pin_level)(uint8_t), uint8_t active_level, uint8_t button_id)
 {
 	memset(handle, 0, sizeof(struct Button));
 	handle->event = (uint8_t)NONE_PRESS;
@@ -143,8 +143,8 @@ void button_handler(struct Button* handle)
 			EVENT_CB(LONG_PRESS_HOLD);
 
 		} else { //releasd
-			handle->event = (uint8_t)PRESS_UP;
-			EVENT_CB(PRESS_UP);
+			handle->event = (uint8_t)LONG_PRESS_UP;
+			EVENT_CB(LONG_PRESS_UP);
 			handle->state = 0; //reset
 		}
 		break;
